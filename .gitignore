@@ -1,0 +1,6 @@
+/.env
+/error.log
+/last_run.txt
+/resumen_ejecucion.html
+/resumen_ejecucion.pdf
+/synchronization.log
