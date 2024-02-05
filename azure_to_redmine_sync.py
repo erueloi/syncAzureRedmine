@@ -286,7 +286,7 @@ def get_azure_devops_tasks():
     logger.info("Obteniendo tareas de Azure DevOps...")
 
     # Ajustar el timestamp para asegurarse de no perder actualizaciones que ocurrieron durante el día de la última sincronización
-    #adjusted_timestamp = last_run_timestamp - datetime.timedelta(days=1)
+    adjusted_timestamp = last_run_timestamp - datetime.timedelta(days=1)
     wiql_query = {
         "query": f"""
             Select 
@@ -307,9 +307,9 @@ def get_azure_devops_tasks():
                     [System.WorkItemType] = 'Bug' 
                     Or [System.WorkItemType] = 'Task'
                     Or [System.WorkItemType] = 'User Story'
-                )                
+                )   
+                And [System.ChangedDate] > '{adjusted_timestamp.strftime("%Y-%m-%d")}'             
         """
-        #And [System.ChangedDate] > '{adjusted_timestamp.strftime("%Y-%m-%d")}'
     }
     token = ':{}'.format(AZURE_TOKEN) 
     encoded_token = base64.b64encode(token.encode()).decode()
@@ -549,8 +549,16 @@ def actualizar_tarea_existente_redmine(redmine_task_found,new_redmine_task, text
     
     if cambios_necesarios:
         if actualizar_tarea_redmine(redmine_task, cambios_necesarios):
-            cambios_realizados = ", ".join([f"{campo}: {valor}" for campo, valor in cambios_necesarios.items()])
+            cambios_realizados = ", ".join([
+                f"{campo}: {next((nombre_estado for nombre_estado, id_estado in mapeo_estados.items() if id_estado == valor), valor)}" if campo == 'estado'
+                else f"{campo}: {next((user.name for user in project_memberships if user.id == valor), valor)}" if campo == 'assigned_to_id'
+                else f"{campo}: {valor}"
+                for campo, valor in cambios_necesarios.items()
+            ])
             mensaje_modificacion = f"{new_redmine_task['type']}: {redmine_task_id} - {new_redmine_task['title']} (Cambios: {cambios_realizados})"
+
+            #cambios_realizados = ", ".join([f"{campo}: {valor}" for campo, valor in cambios_necesarios.items()])
+            #mensaje_modificacion = f"{new_redmine_task['type']}: {redmine_task_id} - {new_redmine_task['title']} (Cambios: {cambios_realizados})"
 
             texto_cambios_realizados = f"{typeTask} {texto_tarea_a_registrar} actualizada en Redmine con Id {redmine_task_id}. Cambios: {cambios_realizados}"
             print(texto_cambios_realizados)
@@ -582,10 +590,11 @@ def necesita_actualizacion(task_azure, redmine_task):
     cambios = {}    
     
     if task_azure['parentid'] is None:
-        campos_a_actualizar = ['estado', 'azure_id', 'version_sprint_id', 'horas_restantes', 'porcentaje_realizado', 'assigned_to_id']
-    else:
         #Campos a actualizar cuando es una HU padre
-        campos_a_actualizar = ['horas_restantes', 'porcentaje_realizado', 'assigned_to_id']
+        campos_a_actualizar = ['estado', 'azure_id', 'version_sprint_id']
+    else:
+        
+        campos_a_actualizar = ['estado', 'azure_id', 'version_sprint_id','horas_restantes', 'porcentaje_realizado', 'assigned_to_id']
 
     # Actualizaciones comunes
     if 'estado' in campos_a_actualizar:
