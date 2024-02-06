@@ -27,6 +27,7 @@ args = parser.parse_args()
 sprint_number = args.sprint_number
 
 load_dotenv()
+wkhtmltopdf_path = os.getenv('WKHTMLTOPDF_PATH')
 # Constants Azure
 AZURE_DEVOPS_PROJECT_BASE = os.getenv('AZURE_DEVOPS_PROJECT_BASE')
 AZURE_TEAM = os.getenv('AZURE_TEAM')
@@ -864,7 +865,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
         file.write(html_content)
     
     # Configuración para asegurarse de que encuentra wkhtmltopdf
-    config = pdfkit.configuration(wkhtmltopdf="C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe")
+    config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
     # Convertir HTML a PDF
     nombre_archivo_pdf = 'resumen_ejecucion.pdf'
     pdfkit.from_string(html_content, nombre_archivo_pdf, configuration=config)   

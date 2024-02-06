@@ -1,0 +1,5 @@
+unidecode
+requests
+python-redmine
+python-dotenv
+pdfkit

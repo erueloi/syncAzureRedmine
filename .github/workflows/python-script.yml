@@ -1,0 +1,50 @@
+name: Run Azure to Redmine Sync Script
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  execute-python-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install wkhtmltopdf
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y wkhtmltopdf
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Set Environment Variables
+      run: |
+        echo "AZURE_DEVOPS_PROJECT_BASE=${{ secrets.AZURE_DEVOPS_PROJECT_BASE }}" >> $GITHUB_ENV
+        echo "AZURE_TEAM=${{ secrets.AZURE_TEAM }}" >> $GITHUB_ENV
+        echo "AZURE_TOKEN=${{ secrets.AZURE_TOKEN }}" >> $GITHUB_ENV
+        echo "AREA_PATH=${{ secrets.AREA_PATH }}" >> $GITHUB_ENV
+        echo "ITERATION_PATH=${{ secrets.ITERATION_PATH }}" >> $GITHUB_ENV
+        echo "REDMINE_URL=${{ secrets.REDMINE_URL }}" >> $GITHUB_ENV
+        echo "REDMINE_TOKEN=${{ secrets.REDMINE_TOKEN }}" >> $GITHUB_ENV
+        echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> $GITHUB_ENV
+        echo "ID_CAMPO_HORAS_RESTANTES=${{ secrets.ID_CAMPO_HORAS_RESTANTES }}" >> $GITHUB_ENV
+        echo "ID_CAMPO_IBER_IDCLIENTE=${{ secrets.ID_CAMPO_IBER_IDCLIENTE }}" >> $GITHUB_ENV
+        echo "SMTP_SERVER=${{ secrets.SMTP_SERVER }}" >> $GITHUB_ENV
+        echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> $GITHUB_ENV
+        echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> $GITHUB_ENV
+        echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> $GITHUB_ENV
+        echo "WKHTMLTOPDF_PATH=${{ secrets.WKHTMLTOPDF_PATH }}" >> $GITHUB_ENV
+
+
+    - name: Run the script
+      run: python azure_to_redmine_sync.py
