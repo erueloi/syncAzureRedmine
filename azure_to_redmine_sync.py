@@ -881,7 +881,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
         asunto += ' - Error'
 
     # Llamar a la función enviar_correo para enviar el PDF generado
-    enviar_correo(destinatarios, asunto, cuerpo, nombre_archivo_pdf) 
+    #enviar_correo(destinatarios, asunto, cuerpo, nombre_archivo_pdf) 
 
 def enviar_correo(destinatarios, asunto, cuerpo, archivo_pdf):
     # Configuración del servidor SMTP y credenciales de acceso
