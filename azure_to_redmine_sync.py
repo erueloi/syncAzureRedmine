@@ -355,7 +355,15 @@ def organize_work_items(work_items):
 
         if item_type in ['User Story', 'Feature']:
             organized[item_id] = task_info
-        elif parent_id and parent_id in organized:
+        elif parent_id:
+            # Si el padre no existe en 'organized', crea un padre fake y lo añade
+            if parent_id not in organized:
+                organized[parent_id] = {
+                    'id': parent_id,
+                    'type': 'Fake Parent',  # Identificador para saber que es un padre fake
+                    'data': None,  # Datos vacíos ya que es un padre fake
+                    'children': []
+                }
             organized[parent_id]['children'].append(task_info)    
     procesado = f"Proceso realizado en {obtener_duracion_formateada()}."
     print(procesado)
@@ -373,7 +381,13 @@ def process_work_items(work_items):
             logger.info(f"Se van a Procesar un total de {total_parent_tasks} HUs con un total de {total_tasks} subtareas...")
 
             for id, US_info in work_items.items():
-                parent_issue_id = process_task((id, US_info))
+                parent_issue_id = None
+                if US_info['data']:
+                    parent_issue_id = process_task((id, US_info))
+                else:
+                    redmine_task = buscar_issue_por_campo_personalizado(id)
+                    if redmine_task is not None:
+                        parent_issue_id = redmine_task['id']
                 if parent_issue_id:
                     for child_info in US_info['children']:
                         # Asegúrate de que child_info es un par clave-valor
