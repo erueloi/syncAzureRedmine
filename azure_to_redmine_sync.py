@@ -283,11 +283,12 @@ def get_azure_devops_tasks():
     Returns:
         list: Una lista de tareas de Azure DevOps.
     """
-    print("Obteniendo tareas de Azure DevOps...")
-    logger.info("Obteniendo tareas de Azure DevOps...")
 
     # Ajustar el timestamp para asegurarse de no perder actualizaciones que ocurrieron durante el día de la última sincronización
     adjusted_timestamp = last_run_timestamp - datetime.timedelta(days=1)
+    print(f"Obteniendo tareas de Azure DevOps modificadas des de {adjusted_timestamp}...")
+    logger.info(f"Obteniendo tareas de Azure DevOps modificadas des de {adjusted_timestamp}...")
+    
     wiql_query = {
         "query": f"""
             Select 
@@ -881,7 +882,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
         asunto += ' - Error'
 
     # Llamar a la función enviar_correo para enviar el PDF generado
-    #enviar_correo(destinatarios, asunto, cuerpo, nombre_archivo_pdf) 
+    enviar_correo(destinatarios, asunto, cuerpo, nombre_archivo_pdf) 
 
 def enviar_correo(destinatarios, asunto, cuerpo, archivo_pdf):
     # Configuración del servidor SMTP y credenciales de acceso
