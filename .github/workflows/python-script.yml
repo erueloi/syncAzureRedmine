@@ -7,10 +7,10 @@ on:
         description: 'Sprint Number (leave blank to use default)'
         required: false
   schedule:
-    - cron: '30/15 8-18 * * 1-4'
-    - cron: '*/15 9-17 * * 1-4'
-    - cron: '*/15 8-13 * * 5'
-    - cron: '0 14 * * 5'
+    # De lunes a jueves, cada 15 minutos desde las 8:00 hasta las 18:00
+    - cron: '*/15 8-17 * * 1-4'
+    # Los viernes, cada 15 minutos desde las 8:00 hasta las 16:00
+    - cron: '*/15 8-15 * * 5'
 
 jobs:
   execute-python-script:
