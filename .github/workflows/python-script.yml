@@ -7,10 +7,18 @@ on:
         description: 'Sprint Number (leave blank to use default)'
         required: false
   schedule:
-    # De lunes a jueves, cada 15 minutos desde las 8:00 hasta las 18:00
-    - cron: '*/15 8-17 * * 1-4'
-    # Los viernes, cada 15 minutos desde las 8:00 hasta las 16:00
-    - cron: '*/15 8-15 * * 5'
+    # Horario Estándar (CET, UTC+1) - Activo
+    # De lunes a jueves, cada 15 minutos desde las 7:00 hasta las 17:00 UTC (8:00 a 18:00 CET)
+    - cron: '*/15 7-16 * * 1-4'
+    # Los viernes, cada 15 minutos desde las 7:00 hasta las 15:00 UTC (8:00 a 16:00 CET)
+    - cron: '*/15 7-14 * * 5'
+
+    # Horario de Verano (CEST, UTC+2) - Comentado
+    # Descomenta las siguientes líneas durante el horario de verano
+    # De lunes a jueves, cada 15 minutos desde las 6:00 hasta las 16:00 UTC (8:00 a 18:00 CEST)
+    # - cron: '*/15 6-15 * * 1-4'
+    # Los viernes, cada 15 minutos desde las 6:00 hasta las 14:00 UTC (8:00 a 16:00 CEST)
+    # - cron: '*/15 6-13 * * 5'
 
 jobs:
   execute-python-script:
