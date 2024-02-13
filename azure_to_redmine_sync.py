@@ -4,6 +4,7 @@ import json
 import os
 import re
 import signal
+import pytz
 from urllib.request import HTTPBasicAuthHandler
 from unidecode import unidecode
 import requests
@@ -19,6 +20,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+
+zona_horaria_local = pytz.timezone('Europe/Madrid')
 
 # Configurar el analizador de argumentos
 parser = argparse.ArgumentParser(description='Sincroniza tareas entre Azure y Redmine.')
@@ -47,7 +50,7 @@ ID_CAMPO_IBER_IDCLIENTE = os.getenv('ID_CAMPO_IBER_IDCLIENTE')
 
 # Instancia del logging
 logger = logging.getLogger('logger_sync_azure_redmine')
-tiempo_inicio = datetime.datetime.now()
+tiempo_inicio = datetime.datetime.now(zona_horaria_local)
 last_run_timestamp = None
 
 #variables globales
@@ -77,14 +80,14 @@ def cargar_ultimo_timestamp():
         with open(last_run_file, 'r') as f:
             last_run_timestamp = datetime.datetime.fromisoformat(f.read().strip())
     else:
-        last_run_timestamp = datetime.datetime.now()
+        last_run_timestamp = datetime.datetime.now(zona_horaria_local)
 
 def actualizar_ultimo_timestamp():
     global last_run_timestamp
     last_run_file = 'last_run.txt'
     with open(last_run_file, 'w') as f:
-        f.write(datetime.datetime.now().isoformat())
-    last_run_timestamp = datetime.datetime.now()
+        f.write(datetime.datetime.now(zona_horaria_local).isoformat())
+    last_run_timestamp = datetime.datetime.now(zona_horaria_local)
 
 def signal_handler(sig, frame):
     logger.info('Señal de cierre detectada. Cerrando la aplicación...')
@@ -121,7 +124,7 @@ def configurar_logging():
 
 def obtener_duracion_formateada():
     global tiempo_inicio
-    tiempo_fin = datetime.datetime.now()
+    tiempo_fin = datetime.datetime.now(zona_horaria_local)
     duracion = tiempo_fin - tiempo_inicio        
     segundos = duracion.total_seconds()
     horas = int(segundos // 3600)
@@ -781,7 +784,9 @@ def actualizar_data_json(nueva_ejecucion):
         data = []
 
     # Añadir la nueva ejecución a la lista
-    data.append(nueva_ejecucion)
+    data.insert(0, nueva_ejecucion)
+
+    data = data[-50:]  # Limitar la lista a las últimas 50 ejecuciones
 
     # Guardar los cambios en data.json
     with open(data_json_path, 'w', encoding='utf-8') as file:
@@ -898,7 +903,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     </html>
     """
 
-    nombre_archivo_html = datetime.datetime.now().strftime("resumen_ejecucion_%Y%m%d_%H%M%S.html")   
+    nombre_archivo_html = datetime.datetime.now(zona_horaria_local).strftime("resumen_ejecucion_%Y%m%d_%H%M%S.html")   
     # Generar el nombre del archivo basado en la fecha y hora actual    
     with open(nombre_archivo_html, 'w', encoding='utf-8') as file:
         file.write(html_content)
