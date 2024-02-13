@@ -78,15 +78,11 @@ jobs:
       - name: Run the script
         run: python azure_to_redmine_sync.py $SPRINT_NUMBER
       
-      - name: Leer Nombre del Archivo
-        id: leer_nombre_archivo
-        run: echo "::set-output name=nombre_archivo::$(cat nombre_archivo.txt)"
-
-       # Mueve el archivo al directorio deseado
+      # Mueve el archivo al directorio deseado
       - name: Mover Archivo de Resumen
         run: |
           mkdir -p docs/resultados
-          mv ${{ steps.leer_nombre_archivo.outputs.nombre_archivo }} docs/resultados/
+          mv $(cat nombre_archivo.txt) docs/resultados/
       
       - name: Configurar Usuario de Git
         run: |
@@ -98,8 +94,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git add docs/resultados/${{ steps.leer_nombre_archivo.outputs.nombre_archivo }}
-          git commit -m "Añadir resumen de ejecución: ${{ steps.leer_nombre_archivo.outputs.nombre_archivo }}"
+          git add docs/resultados/$(cat nombre_archivo.txt)
+          git commit -m "Añadir resumen de ejecución: $(cat nombre_archivo.txt)"
           git remote remove origin
           git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin HEAD:${{ github.ref }}
