@@ -735,7 +735,7 @@ def main():
         logger.info("--------------- Iniciando proceso de sincronizacion Azure <> Redmine ---------------")                               
         cargar_miembros_proyecto()             
         obtener_mapear_estados_redmine()                
-        buscar_version_segun_sprint("Sprint 104")                
+        buscar_version_segun_sprint(f"Sprint {sprint_number}")                
         cargar_issues_Redmine()                                 
         azure_tasks = get_azure_devops_tasks()                   
 

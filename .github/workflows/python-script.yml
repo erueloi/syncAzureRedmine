@@ -88,9 +88,13 @@ jobs:
 
       # Commit y Push
       - name: Commit y Push del Archivo de Resumen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name 'tu_nombre_usuario'
-          git config --global user.email 'tu_email@example.com'
+          git config --global user.name 'Eloi Aymerich'
+          git config --global user.email 'erueloi@gmail.com'
           git add docs/resultados/${{ steps.leer_nombre_archivo.outputs.nombre_archivo }}
           git commit -m "Añadir resumen de ejecución: ${{ steps.leer_nombre_archivo.outputs.nombre_archivo }}"
-          git push
+          git remote remove origin
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:${{ github.ref }}
