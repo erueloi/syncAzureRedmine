@@ -60,7 +60,7 @@ jobs:
           echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> $GITHUB_ENV
           echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> $GITHUB_ENV
           echo "WKHTMLTOPDF_PATH=${{ secrets.WKHTMLTOPDF_PATH }}" >> $GITHUB_ENV
-          echo "DESTINATARIOS_EMAIL: ${{ secrets.DESTINATARIOS_EMAIL }}"" >> $GITHUB_ENV
+          echo "DESTINATARIOS_EMAIL: ${{ secrets.DESTINATARIOS_EMAIL }}" >> $GITHUB_ENV
 
       - name: Determine Sprint Number
         run: |
