@@ -74,10 +74,17 @@ jobs:
         shell: bash
     
       - name: Run the script
-        run: python azure_to_redmine_sync.py $SPRINT_NUMBER
+        id: generar_resumen        
+        run: echo "::set-output name=nombre_archivo::$(python azure_to_redmine_sync.py ${{ github.event.inputs.SPRINT_NUMBER }})"
 
-      # - name: Upload PDF as artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: generated-pdf
-      #     path: resumen_ejecucion.pdf
+      - name: Commit y Push del Archivo de Resumen
+        run: |
+          git config --global user.name 'tu_nombre_usuario'
+          git config --global user.email 'tu_email@example.com'
+          if git status --porcelain | grep -q "${{ steps.generar_resumen.outputs.nombre_archivo }}"; then
+            git add "${{ steps.generar_resumen.outputs.nombre_archivo }}"
+            git commit -m "Añadir resumen de ejecución: ${{ steps.generar_resumen.outputs.nombre_archivo }}"
+            git push
+          else
+            echo "No hay cambios para commitear."
+          fi

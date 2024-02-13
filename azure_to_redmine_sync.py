@@ -877,8 +877,12 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     </html>
     """
 
-    nombre_archivo_html = 'resumen_ejecucion.html'
-    with open(nombre_archivo_html, 'w', encoding='utf-8') as file:
+    nombre_archivo_html = datetime.now().strftime("resumen_ejecucion_%Y%m%d_%H%M%S.html")
+    # Definir la ruta completa donde se guardará el archivo
+    ruta_archivo = f"docs/resultados/{nombre_archivo_html}"
+
+    # Generar el nombre del archivo basado en la fecha y hora actual    
+    with open(ruta_archivo, 'w', encoding='utf-8') as file:
         file.write(html_content)
 
     # Generar listados de tareas para el cuerpo del correo
@@ -933,6 +937,9 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
 
     # Llamar a la función enviar_correo para enviar el PDF generado
     enviar_correo(asunto, cuerpo, nombre_archivo_html) 
+
+    # Al final de tu script de Python
+    print(ruta_archivo)  # Imprime la ruta del archivo HTML generado
 
 def subir_index_html_a_github(ruta_archivo, usuario, token, repositorio, rama):
   """
