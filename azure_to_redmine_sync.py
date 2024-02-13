@@ -818,8 +818,35 @@ def escribir_resultados_ejecucion(created_issues, failed_tasks, modified_tasks, 
     for taskinfo in none_modified_tasks:
         logger.info(f"- {taskinfo}")
 
+def limpiar_archivos_html_antiguos():
+    # Ruta al directorio de resultados y al archivo data.json
+    directorio_resultados = 'docs/resultados'
+    data_json_path = 'docs/data.json'
+    
+    # Leer el contenido actual de data.json
+    try:
+        with open(data_json_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        print("El archivo data.json no existe. No hay nada que limpiar.")
+        return
+    
+    # Obtener los nombres de archivo de los últimos 50 resultados
+    ultimos_50_archivos = {ejecucion['detalle'].split('/')[-1] for ejecucion in data}
+    
+    # Listar todos los archivos HTML en el directorio de resultados
+    archivos_en_directorio = [f for f in os.listdir(directorio_resultados) if f.endswith('.html')]
+    
+    # Eliminar archivos que no están en los últimos 50
+    for archivo in archivos_en_directorio:
+        if archivo not in ultimos_50_archivos:
+            os.remove(os.path.join(directorio_resultados, archivo))
+            print(f"Archivo eliminado: {archivo}")
+
 def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modified_tasks, failed_tasks, none_modified_tasks, exito, mensaje_error = ''):       
     
+    limpiar_archivos_html_antiguos()
+
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">

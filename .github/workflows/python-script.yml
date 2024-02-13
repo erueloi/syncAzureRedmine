@@ -96,18 +96,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          archivo_html="docs/resultados/$(cat nombre_archivo.txt)"
-          archivo_json="docs/data.json"
-      
-          # Añade ambos archivos al staging area de Git
-          git add $archivo_html $archivo_json
-      
+          # Añade cualquier cambio en docs/resultados y docs/data.json al staging area
+          git add docs/resultados/
+          git add docs/data.json
+
           # Commit los cambios con un mensaje descriptivo
-          git commit -m "Actualizar datos: Añadir resumen de ejecución $(cat nombre_archivo.txt) y actualizar data.json"
-      
+          # Aquí se incluye explícitamente el nombre del archivo HTML en el mensaje de commit
+          archivo_html="docs/resultados/$(cat nombre_archivo.txt)"
+          git commit -m "Actualizar datos: Añadir resumen de ejecución $(basename $archivo_html) y actualizar data.json" || echo "No hay cambios para commitear."
+          
           # Configura el remote para usar GITHUB_TOKEN para autenticación
           git remote remove origin
           git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-      
+          
           # Hace push de los cambios a la rama actual
           git push origin HEAD:${{ github.ref }}
