@@ -912,7 +912,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     "tareasModificadas": len(modified_tasks),
     "tareasFallidas": len(failed_tasks),
     "tareasNoModificadas": len(none_modified_tasks),
-    "estado": "Completado",
+    "Con Éxito" if exito else "Con Errores"
     "detalle": f"resultados/{nombre_archivo_html}"
     }
     actualizar_data_json(nueva_ejecucion)
@@ -920,9 +920,10 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     # Generar listados de tareas para el cuerpo del correo
     def generar_listado_tareas(tareas):
         if tareas:
-            return "<ul class='listado'>" + "".join(f"<li>{tarea}</li>" for tarea in tareas) + "</ul>"
+            # Usando ul y li para una lista con puntos (bullets) por defecto
+            return "<ul style='list-style-type: disc;'>" + "".join(f"<li>{tarea}</li>" for tarea in tareas) + "</ul>"
         else:
-            return "<p>No hay tareas en esta categoría.</p>"              
+            return "<p>No hay tareas en esta categoría.</p>"             
     
     # Preparar el cuerpo del correo con detalles de la ejecución y estadísticas
     detalles_ejecucion = f"""
