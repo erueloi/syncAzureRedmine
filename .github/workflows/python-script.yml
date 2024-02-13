@@ -74,8 +74,10 @@ jobs:
         shell: bash
     
       - name: Run the script
-        id: generar_resumen        
-        run: echo "::set-output name=nombre_archivo::$(python azure_to_redmine_sync.py ${{ github.event.inputs.SPRINT_NUMBER }})"
+        id: generar_resumen
+        run: |
+          nombre_archivo=$(python azure_to_redmine_sync.py $SPRINT_NUMBER)
+          echo "nombre_archivo=$nombre_archivo" >> $GITHUB_OUTPUT
 
       - name: Commit y Push del Archivo de Resumen
         run: |
