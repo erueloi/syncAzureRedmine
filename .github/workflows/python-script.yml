@@ -75,8 +75,8 @@ jobs:
       - name: Run the script
         run: python azure_to_redmine_sync.py $SPRINT_NUMBER
 
-      - name: Upload PDF as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: generated-pdf
-          path: resumen_ejecucion.pdf
+      # - name: Upload PDF as artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: generated-pdf
+      #     path: resumen_ejecucion.pdf
