@@ -24,5 +24,13 @@
         "tareasFallidas": 0,
         "tareasNoModificadas": 42,
         "Con Éxito": "resultados/resumen_ejecucion_20240213_163823.html"
+    },
+    {
+        "fechaHora": "2024-02-13 16:46",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 43,
+        "Con Éxito": "resultados/resumen_ejecucion_20240213_165057.html"
     }
 ]
