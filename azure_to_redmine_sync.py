@@ -3,6 +3,7 @@ import datetime
 import os
 import re
 import signal
+from urllib.request import HTTPBasicAuthHandler
 from unidecode import unidecode
 import requests
 from redminelib import Redmine
@@ -12,7 +13,7 @@ from logging.handlers import RotatingFileHandler
 import sys
 from dotenv import load_dotenv
 import argparse
-import pdfkit
+#import pdfkit
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -876,29 +877,113 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     </html>
     """
 
-    with open('resumen_ejecucion.html', 'w', encoding='utf-8') as file:
+    nombre_archivo_html = 'resumen_ejecucion.html'
+    with open(nombre_archivo_html, 'w', encoding='utf-8') as file:
         file.write(html_content)
-    
-    # Configuración para asegurarse de que encuentra wkhtmltopdf
-    config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_path)
-    # Convertir HTML a PDF
-    nombre_archivo_pdf = 'resumen_ejecucion.pdf'
-    pdfkit.from_string(html_content, nombre_archivo_pdf, configuration=config)   
 
-    # Datos del correo
-    destinatarios = ['eaymerich@hiberus.com']
-    asunto = 'Resumen de Ejecución de la Sincronización'
-    if exito:
-        cuerpo = f'Se ha procesado correctamente el proceso de sincronización en {obtener_duracion_formateada()}.\n\nSe adjunta el resumen.\n\nSaludos'
-        asunto += ' - Ejecutado correctamente'
-    else:
-        cuerpo = f'Se ha encontrado un error durante la ejecución del proceso de sincronización.\n\n{mensaje_error}\n\nSe adjunta el resumen.\n\nSaludos'
-        asunto += ' - Error'
+    # Generar listados de tareas para el cuerpo del correo
+    def generar_listado_tareas(tareas):
+        if tareas:
+            return "<ul class='listado'>" + "".join(f"<li>{tarea}</li>" for tarea in tareas) + "</ul>"
+        else:
+            return "<p>No hay tareas en esta categoría.</p>"              
+    
+    # Preparar el cuerpo del correo con detalles de la ejecución y estadísticas
+    detalles_ejecucion = f"""
+    <h3>Detalles de la Ejecución:</h3>
+    <p>Duración de la ejecución: {obtener_duracion_formateada()}</p>
+    <p>Versión del Sprint: {version_sprint.name}</p>
+    """
+
+    estadisticas_tareas = f"""
+    <h3>Resultado Proceasdo Tareas:</h3>
+    <p>Total de HUs procesadas: {total_parent_tasks}</p>
+    <p>Total de subtareas procesadas: {total_tasks}</p>
+    <p>Total de Issues Creadas: {len(created_issues)}</p>
+    {generar_listado_tareas(created_issues)}
+    <p>Total de Issues Modificadas: {len(modified_tasks)}</p>
+    {generar_listado_tareas(modified_tasks)}
+    <p>Total de Issues Fallidas: {len(failed_tasks)}</p>
+    {generar_listado_tareas(failed_tasks)}
+    """
+    
+    if not exito:
+        estadisticas_tareas += f"<p>Error: {mensaje_error}</p>"
+
+    # Agregando una firma al final con espaciado
+    firma = """
+    <br><br>
+    <p>Para más detalles, consultar el archivo adjunto.</p>
+    <br>
+    <p>—<br>Equipo de Sincronización de Tareas</p>
+    """
+
+    cuerpo = f"""<html><head><style>
+    ul {{ list-style-type: none; padding: 0; }}
+    li {{ margin-bottom: 5px; }}
+    </style></head><body>
+    <h2>Resumen Rápido de la Sincronización:</h2>
+    {detalles_ejecucion}
+    {estadisticas_tareas}
+    {firma}
+    </body></html>"""
+
+    # Datos del correo    
+    asunto = 'Resumen de Ejecución de la Sincronización' + (' - Ejecutado correctamente' if exito else ' - Error')
 
     # Llamar a la función enviar_correo para enviar el PDF generado
-    enviar_correo(destinatarios, asunto, cuerpo, nombre_archivo_pdf) 
+    enviar_correo(asunto, cuerpo, nombre_archivo_html) 
 
-def enviar_correo(destinatarios, asunto, cuerpo, archivo_pdf):
+def subir_index_html_a_github(ruta_archivo, usuario, token, repositorio, rama):
+  """
+  Sube el archivo index.html a GitHub.
+
+  Args:
+    ruta_archivo: Ruta al archivo index.html.
+    usuario: Usuario de GitHub.
+    token: Token de acceso personal de GitHub.
+    repositorio: Nombre del repositorio.
+    rama: Rama a la que se subirá el archivo.
+  """
+
+  # Carga el contenido del archivo
+  with open(ruta_archivo, "rb") as f:
+    content = f.read()
+
+  # Define la URL de la API de GitHub
+  url = f"https://api.github.com/repos/{usuario}/{repositorio}/contents/{rama}/{ruta_archivo}"
+
+  # Credenciales de autenticación
+  auth = HTTPBasicAuthHandler(usuario, token)
+
+  # Crea la solicitud para actualizar el archivo
+  response = requests.put(
+      url,
+      auth=auth,
+      data={"content": content, "message": "Actualizando index.html"},
+  )
+
+  # Verifica el estado de la solicitud
+  if response.status_code == 200:
+    print("¡Index.html actualizado correctamente!")
+  else:
+    print("Error al actualizar el archivo:", response.status_code)
+
+    # Opción 1: Ruta fija
+    ruta_archivo = "docs/index.html"
+
+    # Opción 2: Variable __file__
+    # ruta_archivo = os.path.join(os.path.dirname(__file__), "docs", "index.html")
+
+    # Opción 3: Variable de entorno
+    # ruta_archivo = os.path.join(os.environ["DOCS_DIR"], "index.html")
+
+    # ... Generación del index.html y otras rutinas del script
+
+def enviar_correo(asunto, cuerpo, archivo):
+    # Leer los destinatarios desde el archivo .env
+    destinatarios = os.getenv('DESTINATARIOS_EMAIL').split(',')
+
     # Configuración del servidor SMTP y credenciales de acceso
     servidor_smtp = os.getenv('SMTP_SERVER')
     puerto_smtp = int(os.getenv('SMTP_PORT'))
@@ -910,14 +995,14 @@ def enviar_correo(destinatarios, asunto, cuerpo, archivo_pdf):
     mensaje['From'] = usuario_smtp
     mensaje['To'] = ", ".join(destinatarios)
     mensaje['Subject'] = asunto
-    mensaje.attach(MIMEText(cuerpo, 'plain'))
+    mensaje.attach(MIMEText(cuerpo, 'html'))
 
     # Adjuntar el archivo PDF
     try:
-        with open(archivo_pdf, 'rb') as f:
-            part = MIMEApplication(f.read(), Name=os.path.basename(archivo_pdf))
+        with open(archivo, 'rb') as f:
+            part = MIMEApplication(f.read(), Name=os.path.basename(archivo))
         # Después de leer el archivo, añade los headers necesarios
-        part['Content-Disposition'] = f'attachment; filename="{os.path.basename(archivo_pdf)}"'
+        part['Content-Disposition'] = f'attachment; filename="{os.path.basename(archivo)}"'
         mensaje.attach(part)
     except Exception as e:
         print(f'Ocurrió un error al adjuntar el archivo PDF: {e}')

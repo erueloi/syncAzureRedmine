@@ -1,0 +1,16 @@
+[
+    {
+        "fechaHora": "2024-02-13 10:00",
+        "tareasCreadas": 5,
+        "tareasModificadas": 3,
+        "estado": "Completado",
+        "informe": "https://example.com/informe1.pdf"
+    },
+    {
+        "fechaHora": "2024-02-13 09:45",
+        "tareasCreadas": 2,
+        "tareasModificadas": 4,
+        "estado": "Completado",
+        "informe": "https://example.com/informe2.pdf"
+    }
+]

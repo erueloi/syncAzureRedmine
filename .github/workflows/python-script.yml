@@ -33,10 +33,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install wkhtmltopdf
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y wkhtmltopdf
+      # - name: Install wkhtmltopdf
+      #   run: |
+      #     sudo apt-get update -y
+      #     sudo apt-get install -y wkhtmltopdf
 
       - name: Install Python dependencies
         run: |
