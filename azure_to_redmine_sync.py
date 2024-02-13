@@ -18,7 +18,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-from datetime import datetime
 
 # Configurar el analizador de argumentos
 parser = argparse.ArgumentParser(description='Sincroniza tareas entre Azure y Redmine.')
@@ -878,7 +877,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     </html>
     """
 
-    nombre_archivo_html = datetime.now().strftime("resumen_ejecucion_%Y%m%d_%H%M%S.html")
+    nombre_archivo_html = datetime.datetime.now().strftime("resumen_ejecucion_%Y%m%d_%H%M%S.html")
     # Definir la ruta completa donde se guardará el archivo
     ruta_archivo = f"docs/resultados/{nombre_archivo_html}"
 
