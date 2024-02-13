@@ -912,7 +912,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     "tareasModificadas": len(modified_tasks),
     "tareasFallidas": len(failed_tasks),
     "tareasNoModificadas": len(none_modified_tasks),
-    "Con Éxito" if exito else "Con Errores"
+    "estado": "Con Éxito" if exito else "Con Errores",
     "detalle": f"resultados/{nombre_archivo_html}"
     }
     actualizar_data_json(nueva_ejecucion)
