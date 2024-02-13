@@ -1,41 +1,91 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f0f2f5;
     color: #333;
+    line-height: 1.6;
 }
 
-header, footer {
+header {
+    background-color: #0056b3;
+    color: #fff;
+    padding: 20px 0;
     text-align: center;
-    padding: 1em;
-    background-color: #007bff;
-    color: white;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
 }
 
 main {
-    padding: 1em;
+    padding: 20px;
+    max-width: 960px;
+    margin: auto;
 }
 
 table {
     width: 100%;
+    margin-top: 20px;
     border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-}
-
 th, td {
-    padding: 8px;
-    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
 th {
     background-color: #007bff;
-    color: white;
+    color: #ffffff;
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #0056b3;
+    color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin: 0 0 20px 0;
+    }
+
+    td {
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        text-align: left;
+        font-weight: bold;
+    }
 }
