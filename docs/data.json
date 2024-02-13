@@ -1,21 +1,11 @@
 [
     {
-        "fechaHora": "2024-02-13 10:00",
-        "tareasCreadas": 5,
-        "tareasModificadas": 3,
-        "tareasFallidas": 1,
-        "tareasNoModificadas": 2,
-        "estado": "Completado",
-        "informe": "https://example.com/informe1.pdf"
-    },
-    {
-        "fechaHora": "2024-02-13 09:45",
-        "tareasCreadas": 2,
-        "tareasModificadas": 4,
+        "fechaHora": "2024-02-13 17:09",
+        "tareasCreadas": 0,
+        "tareasModificadas": 2,
         "tareasFallidas": 0,
-        "tareasNoModificadas": 5,
+        "tareasNoModificadas": 40,
         "estado": "Completado",
-        "informe": "https://example.com/informe2.pdf"
+        "detalle": "resultados/resumen_ejecucion_20240213_171034.html"
     }
 ]
-

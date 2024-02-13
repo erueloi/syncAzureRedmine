@@ -29,6 +29,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -94,8 +96,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git add docs/resultados/$(cat nombre_archivo.txt)
-          git commit -m "Añadir resumen de ejecución: $(cat nombre_archivo.txt)"
+          archivo_html="docs/resultados/$(cat nombre_archivo.txt)"
+          archivo_json="docs/data.json"
+      
+          # Añade ambos archivos al staging area de Git
+          git add $archivo_html $archivo_json
+      
+          # Commit los cambios con un mensaje descriptivo
+          git commit -m "Actualizar datos: Añadir resumen de ejecución $(cat nombre_archivo.txt) y actualizar data.json"
+      
+          # Configura el remote para usar GITHUB_TOKEN para autenticación
           git remote remove origin
           git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+      
+          # Hace push de los cambios a la rama actual
           git push origin HEAD:${{ github.ref }}

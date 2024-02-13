@@ -1,5 +1,6 @@
 import base64
 import datetime
+import json
 import os
 import re
 import signal
@@ -767,6 +768,25 @@ def main():
     total_parent_tasks = len(azure_tasks) 
     generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modified_tasks, failed_tasks, none_modified_tasks, exito)
 
+def actualizar_data_json(nueva_ejecucion):
+    # Ruta al archivo data.json dentro de la carpeta docs
+    data_json_path = 'docs/data.json'
+
+    # Leer el contenido actual de data.json
+    try:
+        with open(data_json_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        # Si data.json no existe, empezamos con una lista vacía
+        data = []
+
+    # Añadir la nueva ejecución a la lista
+    data.append(nueva_ejecucion)
+
+    # Guardar los cambios en data.json
+    with open(data_json_path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
 def escribir_resultados_ejecucion(created_issues, failed_tasks, modified_tasks, none_modified_tasks):    
 
     logger.info("Escribiendo resultados en el logger...")
@@ -793,7 +813,8 @@ def escribir_resultados_ejecucion(created_issues, failed_tasks, modified_tasks, 
     for taskinfo in none_modified_tasks:
         logger.info(f"- {taskinfo}")
 
-def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modified_tasks, failed_tasks, none_modified_tasks, exito, mensaje_error = ''):
+def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modified_tasks, failed_tasks, none_modified_tasks, exito, mensaje_error = ''):       
+    
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -884,6 +905,18 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     with open('nombre_archivo.txt', 'w') as f:
         f.write(nombre_archivo_html)
 
+    # Actualizar el archivo data.json con los resultados de la ejecución
+    nueva_ejecucion = {
+    "fechaHora": tiempo_inicio.strftime("%Y-%m-%d %H:%M"),
+    "tareasCreadas": len(created_issues),
+    "tareasModificadas": len(modified_tasks),
+    "tareasFallidas": len(failed_tasks),
+    "tareasNoModificadas": len(none_modified_tasks),
+    "estado": "Completado",
+    "detalle": f"resultados/{nombre_archivo_html}"
+    }
+    actualizar_data_json(nueva_ejecucion)
+
     # Generar listados de tareas para el cuerpo del correo
     def generar_listado_tareas(tareas):
         if tareas:
@@ -913,10 +946,12 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     if not exito:
         estadisticas_tareas += f"<p>Error: {mensaje_error}</p>"
 
-    # Agregando una firma al final con espaciado
-    firma = """
+    # Definir la base URL de GitHub Pages para tu proyecto
+    base_url = "https://erueloi.github.io/syncAzureRedmine/"
+
+    firma = f"""
     <br><br>
-    <p>Para más detalles, consultar el archivo adjunto.</p>
+    <p>Para más detalles, consulta el resumen de la ejecución en: <a href="{base_url}resultados/{nombre_archivo_html}">Detalle Ejecución</a></p>
     <br>
     <p>—<br>Equipo de Sincronización de Tareas</p>
     """
@@ -935,7 +970,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
     asunto = 'Resumen de Ejecución de la Sincronización' + (' - Ejecutado correctamente' if exito else ' - Error')
 
     # Llamar a la función enviar_correo para enviar el PDF generado
-    enviar_correo(asunto, cuerpo, nombre_archivo_html) 
+    enviar_correo(asunto, cuerpo) 
 
 def subir_index_html_a_github(ruta_archivo, usuario, token, repositorio, rama):
   """
@@ -983,7 +1018,7 @@ def subir_index_html_a_github(ruta_archivo, usuario, token, repositorio, rama):
 
     # ... Generación del index.html y otras rutinas del script
 
-def enviar_correo(asunto, cuerpo, archivo):
+def enviar_correo(asunto, cuerpo, archivo=None):
     # Leer los destinatarios desde el archivo .env
     destinatarios = os.getenv('DESTINATARIOS_EMAIL').split(',')
 
@@ -1000,16 +1035,18 @@ def enviar_correo(asunto, cuerpo, archivo):
     mensaje['Subject'] = asunto
     mensaje.attach(MIMEText(cuerpo, 'html'))
 
-    # Adjuntar el archivo PDF
-    try:
-        with open(archivo, 'rb') as f:
-            part = MIMEApplication(f.read(), Name=os.path.basename(archivo))
-        # Después de leer el archivo, añade los headers necesarios
-        part['Content-Disposition'] = f'attachment; filename="{os.path.basename(archivo)}"'
-        mensaje.attach(part)
-    except Exception as e:
-        print(f'Ocurrió un error al adjuntar el archivo PDF: {e}')
-        return
+    # Verificar si hay un archivo para adjuntar
+    if archivo:
+        try:
+            with open(archivo, 'rb') as f:
+                part = MIMEApplication(f.read(), Name=os.path.basename(archivo))
+            # Después de leer el archivo, añade los headers necesarios
+            part['Content-Disposition'] = f'attachment; filename="{os.path.basename(archivo)}"'
+            mensaje.attach(part)
+        except Exception as e:
+            print(f'Ocurrió un error al adjuntar el archivo: {e}')
+            # Opcionalmente, podrías decidir retornar aquí o manejar el error de otra manera
+
 
     # Enviar el correo
     with smtplib.SMTP(servidor_smtp, puerto_smtp) as servidor:
