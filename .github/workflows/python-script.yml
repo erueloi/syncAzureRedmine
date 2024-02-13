@@ -23,6 +23,8 @@ on:
 jobs:
   execute-python-script:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -85,6 +87,11 @@ jobs:
         run: |
           mkdir -p docs/resultados
           mv ${{ steps.leer_nombre_archivo.outputs.nombre_archivo }} docs/resultados/
+      
+      - name: Configurar Usuario de Git
+        run: |
+          git config user.name 'Eloi Aymerich'
+          git config user.email 'erueloi@gmail.com'
 
       # Commit y Push
       - name: Commit y Push del Archivo de Resumen
