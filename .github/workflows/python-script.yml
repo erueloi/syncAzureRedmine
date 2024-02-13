@@ -74,22 +74,23 @@ jobs:
         shell: bash
     
       - name: Run the script
-        id: generar_resumen
-        run: |
-          nombre_archivo=$(python azure_to_redmine_sync.py $SPRINT_NUMBER)
-          echo "nombre_archivo=$nombre_archivo" >> $GITHUB_OUTPUT
+        run: python azure_to_redmine_sync.py $SPRINT_NUMBER
+      
+      - name: Leer Nombre del Archivo
+        id: leer_nombre_archivo
+        run: echo "::set-output name=nombre_archivo::$(cat nombre_archivo.txt)"
 
        # Mueve el archivo al directorio deseado
       - name: Mover Archivo de Resumen
         run: |
           mkdir -p docs/resultados
-          mv ${{ steps.generar_resumen.outputs.nombre_archivo }} docs/resultados/
+          mv ${{ steps.leer_nombre_archivo.outputs.nombre_archivo }} docs/resultados/
 
       # Commit y Push
       - name: Commit y Push del Archivo de Resumen
         run: |
           git config --global user.name 'tu_nombre_usuario'
           git config --global user.email 'tu_email@example.com'
-          git add docs/resultados/${{ steps.generar_resumen.outputs.nombre_archivo }}
-          git commit -m "Añadir resumen de ejecución: ${{ steps.generar_resumen.outputs.nombre_archivo }}"
+          git add docs/resultados/${{ steps.leer_nombre_archivo.outputs.nombre_archivo }}
+          git commit -m "Añadir resumen de ejecución: ${{ steps.leer_nombre_archivo.outputs.nombre_archivo }}"
           git push
