@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sincronización Azure DevOps a Redmine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,7 +31,7 @@
         </table>
     </main>
     <footer>
-        <p>Última actualización: <!-- Fecha de actualización dinámica --></p>
+        <p>Última actualización: <span id="last-update">cargando...</span> <button id="refresh-button"><i class="fas fa-sync-alt"></i></button></p>
     </footer>
     <script src="script.js"></script>
 </body>
