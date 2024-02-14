@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${execution.tareasFallidas}</td>
                 <td>${execution.tareasNoModificadas}</td>
                 <td>${execution.estado}</td>
-                <td><a href="${execution.detalle}" target="_blank">Detalle</a></td>
+                <td><a href="${execution.detalle}">Detalle</a></td>
               `;
               tbody.appendChild(row);
           });
