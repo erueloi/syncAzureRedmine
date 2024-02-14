@@ -854,78 +854,58 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Resumen de Ejecución</title>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                padding: 20px;
-                background-color: #f4f4f4;
-            }}
-            h1 {{
-                color: #333;
-            }}
-            .summary {{
-                background-color: #fff;
-                padding: 20px;
-                margin-bottom: 20px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }}
-            .task-list {{
-                list-style-type: none;
-                padding: 0;
-            }}
-            .task-list li {{
-                padding: 5px;
-                border-bottom: 1px solid #ccc;
-            }}
-            .task-list li:last-child {{
-                border-bottom: none;
-            }}
-        </style>
+        <title>Detalle de la Ejecución</title>
+        <link rel="stylesheet" href="../style.css">
     </head>
     <body>
-        <h1>Resumen de Sincronización Azure <> Redmine</h1>
-        <div class="summary">
-            <h2>Detalles de Ejecución:</h2>
-            <p>Inicio: {tiempo_inicio}</p>
-            <p>Duración: {obtener_duracion_formateada()}</p>
-            <p>Versión del Sprint: {version_sprint.name}</p>           
-        </div>
-        <div class="summary">
-            <h2>Estadísticas:</h2>
-            <p>Total de HUs procesadas: {total_parent_tasks}</p>
-            <p>Total de subtareas procesadas: {total_tasks}</p>
-            <p>Total de Issues Creadas: {len(created_issues)}</p> 
-            <p>Total de Issues Modificadas: {len(modified_tasks)}</p>
-            <p>Total de Issues No Modificadas: {len(none_modified_tasks)}</p>
-            <p>Total de Issues Fallidas: {len(failed_tasks)}</p>
-        </div>
-        <div class="summary">
-            <h2>Tareas Creadas:</h2>
-            <ul class="task-list">
-                {''.join(f"<li>{issue}</li>" for issue in created_issues)}
-            </ul>
-        </div>
-        <div class="summary">
-            <h2>Tareas Modificadas:</h2>
-            <ul class="task-list">
-                {''.join(f"<li>{task}</li>" for task in modified_tasks)}
-            </ul>
-        </div>
-        <div class="summary">
-            <h2>Tareas No Modificadas:</h2>
-            <ul class="task-list">
-                {''.join(f"<li>{task}</li>" for task in none_modified_tasks)}
-            </ul>
-        </div>
-        <div class="summary">
-            <h2>Tareas Fallidas:</h2>
-            <ul class="task-list">
-                {''.join(f"<li>{task}</li>" for task in failed_tasks)}
-            </ul>
-        </div>
+        <header>
+            <h1>Detalle de Sincronización Azure <> Redmine</h1>
+        </header>
+        <main>
+            <div class="summary">
+                <h2>Detalles de Ejecución:</h2>
+                <p>Inicio: {tiempo_inicio}</p>
+                <p>Duración: {obtener_duracion_formateada()}</p>
+                <p>Versión del Sprint: {version_sprint.name}</p>           
+            </div>
+            <div class="summary">
+                <h2>Estadísticas:</h2>
+                <p>Total de HUs procesadas: {total_parent_tasks}</p>
+                <p>Total de subtareas procesadas: {total_tasks}</p>
+                <p>Total de Issues Creadas: {len(created_issues)}</p> 
+                <p>Total de Issues Modificadas: {len(modified_tasks)}</p>
+                <p>Total de Issues No Modificadas: {len(none_modified_tasks)}</p>
+                <p>Total de Issues Fallidas: {len(failed_tasks)}</p>
+            </div>
+            <div class="summary">
+                <h2>Tareas Creadas:</h2>
+                <ul class="task-list">
+                    {''.join(f"<li>{issue}</li>" for issue in created_issues)}
+                </ul>
+            </div>
+            <div class="summary">
+                <h2>Tareas Modificadas:</h2>
+                <ul class="task-list">
+                    {''.join(f"<li>{task}</li>" for task in modified_tasks)}
+                </ul>
+            </div>
+            <div class="summary">
+                <h2>Tareas No Modificadas:</h2>
+                <ul class="task-list">
+                    {''.join(f"<li>{task}</li>" for task in none_modified_tasks)}
+                </ul>
+            </div>
+            <div class="summary">
+                <h2>Tareas Fallidas:</h2>
+                <ul class="task-list">
+                    {''.join(f"<li>{task}</li>" for task in failed_tasks)}
+                </ul>
+            </div>
+        </main>
+        <footer>
+            <a href="../index.html">Volver a la lista de ejecuciones</a>
+        </footer>
+        <script src="../script.js"></script>
     </body>
     </html>
     """
@@ -1001,9 +981,9 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
 
     # Datos del correo    
     asunto = 'Resumen de Ejecución de la Sincronización' + (' - Ejecutado correctamente' if exito else ' - Error')
-
-    # Llamar a la función enviar_correo para enviar el PDF generado
-    enviar_correo(asunto, cuerpo) 
+    
+    if not exito:
+        enviar_correo(asunto, cuerpo) 
 
 def subir_index_html_a_github(ruta_archivo, usuario, token, repositorio, rama):
   """

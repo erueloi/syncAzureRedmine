@@ -56,6 +56,11 @@ footer {
     width: 100%;
 }
 
+footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     table, thead, tbody, th, td, tr {
         display: block;
