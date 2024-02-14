@@ -861,51 +861,37 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
         <header>
             <h1>Detalle de Sincronización Azure <> Redmine</h1>
         </header>
-        <main>
-            <div class="summary">
-                <h2>Detalles de Ejecución:</h2>
-                <p>Inicio: {tiempo_inicio}</p>
-                <p>Duración: {obtener_duracion_formateada()}</p>
-                <p>Versión del Sprint: {version_sprint.name}</p>           
+        <main class="flex-container">
+            <div class="flex-item">
+                <div class="summary">
+                    <h2>Detalles de Ejecución:</h2>
+                    <p>Inicio: {tiempo_inicio}</p>
+                    <p>Duración: {obtener_duracion_formateada()}</p>
+                    <p>Versión del Sprint: {version_sprint.name}</p>           
+                </div>
+                <div class="summary">
+                    <h2>Estadísticas:</h2>
+                    <p>Total de HUs procesadas: {total_parent_tasks}</p>
+                    <p>Total de subtareas procesadas: {total_tasks}</p>
+                    <p>Total de Issues Creadas: {len(created_issues)}</p> 
+                    <p>Total de Issues Modificadas: {len(modified_tasks)}</p>
+                    <p>Total de Issues No Modificadas: {len(none_modified_tasks)}</p>
+                    <p>Total de Issues Fallidas: {len(failed_tasks)}</p>
+                </div>
             </div>
+            <!-- Condicionales para verificar si hay tareas antes de mostrar cada sección -->
+            {''.join(f"""
             <div class="summary">
-                <h2>Estadísticas:</h2>
-                <p>Total de HUs procesadas: {total_parent_tasks}</p>
-                <p>Total de subtareas procesadas: {total_tasks}</p>
-                <p>Total de Issues Creadas: {len(created_issues)}</p> 
-                <p>Total de Issues Modificadas: {len(modified_tasks)}</p>
-                <p>Total de Issues No Modificadas: {len(none_modified_tasks)}</p>
-                <p>Total de Issues Fallidas: {len(failed_tasks)}</p>
-            </div>
-            <div class="summary">
-                <h2>Tareas Creadas:</h2>
+                <h2>Tareas {tipo}:</h2>
                 <ul class="task-list">
-                    {''.join(f"<li>{issue}</li>" for issue in created_issues)}
+                    {''.join(f"<li>{task}</li>" for task in tasks)}
                 </ul>
             </div>
-            <div class="summary">
-                <h2>Tareas Modificadas:</h2>
-                <ul class="task-list">
-                    {''.join(f"<li>{task}</li>" for task in modified_tasks)}
-                </ul>
-            </div>
-            <div class="summary">
-                <h2>Tareas No Modificadas:</h2>
-                <ul class="task-list">
-                    {''.join(f"<li>{task}</li>" for task in none_modified_tasks)}
-                </ul>
-            </div>
-            <div class="summary">
-                <h2>Tareas Fallidas:</h2>
-                <ul class="task-list">
-                    {''.join(f"<li>{task}</li>" for task in failed_tasks)}
-                </ul>
-            </div>
+            """ for tipo, tasks in (("Creadas", created_issues), ("Modificadas", modified_tasks), ("No Modificadas", none_modified_tasks), ("Fallidas", failed_tasks)) if tasks)}
         </main>
         <footer>
             <a href="../index.html">Volver a la lista de ejecuciones</a>
         </footer>
-        <script src="../script.js"></script>
     </body>
     </html>
     """

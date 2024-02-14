@@ -61,6 +61,31 @@ footer a {
     text-decoration: underline;
 }
 
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espaciado entre los elementos */
+}
+
+.flex-item {
+    flex: 1;
+    min-width: 300px; /* Asegura que los elementos no sean demasiado pequeños */
+}
+
+.summary {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-list {
+    list-style-type: disc;
+    padding-left: 20px; /* Añade indentación para las listas */
+}
+
+
 @media (max-width: 768px) {
     table, thead, tbody, th, td, tr {
         display: block;
@@ -92,5 +117,9 @@ footer a {
         content: attr(data-label);
         text-align: left;
         font-weight: bold;
+    }
+
+    .flex-container {
+        flex-direction: column;
     }
 }
