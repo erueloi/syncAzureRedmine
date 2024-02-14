@@ -21,7 +21,7 @@ header h1 {
 
 main {
     padding: 20px;
-    max-width: 960px;
+    max-width: 1200px;
     margin: auto;
 }
 
@@ -88,8 +88,9 @@ footer a {
 /* Estilo modificado para la tabla */
 .table-scrollable {
     display: block;
-    max-height: 500px; /* Altura máxima deseada para la tabla */
+    max-height: 600px; /* Altura máxima deseada para la tabla */
     overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede la altura máxima */
+    overflow-x: auto; /* Habilita el desplazamiento horizontal si el contenido excede el ancho máximo */
     width: 100%;
 }
 
@@ -106,8 +107,6 @@ footer a {
 .table-scrollable tbody tr:first-child td {
     padding-top: 20px;
 }
-
-
 
 @media (max-width: 768px) {
     table, thead, tbody, th, td, tr {
