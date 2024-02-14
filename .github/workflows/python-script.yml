@@ -88,8 +88,8 @@ jobs:
       
       - name: Configurar Usuario de Git
         run: |
-          git config user.name 'Eloi Aymerich'
-          git config user.email 'erueloi@gmail.com'
+          git config user.name 'AutoSyncBot'
+          git config user.email 'autosyncbot@correo.com'
 
       # Commit y Push
       - name: Commit y Push del Archivo de Resumen
