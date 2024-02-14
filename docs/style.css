@@ -64,12 +64,12 @@ footer a {
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Espaciado entre los elementos */
+    gap: 20px; 
 }
 
 .flex-item {
     flex: 1;
-    min-width: 300px; /* Asegura que los elementos no sean demasiado pequeños */
+    min-width: 300px; 
 }
 
 .summary {
@@ -82,8 +82,9 @@ footer a {
 
 .task-list {
     list-style-type: disc;
-    padding-left: 20px; /* Añade indentación para las listas */
+    padding-left: 20px;
 }
+
 
 
 @media (max-width: 768px) {

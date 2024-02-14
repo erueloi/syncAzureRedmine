@@ -861,15 +861,15 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
         <header>
             <h1>Detalle de Sincronización Azure <> Redmine</h1>
         </header>
-        <main class="flex-container">
-            <div class="flex-item">
-                <div class="summary">
+        <main>
+            <div class="flex-container">
+                <div class="flex-item summary">
                     <h2>Detalles de Ejecución:</h2>
                     <p>Inicio: {tiempo_inicio}</p>
                     <p>Duración: {obtener_duracion_formateada()}</p>
                     <p>Versión del Sprint: {version_sprint.name}</p>           
                 </div>
-                <div class="summary">
+                <div class="flex-item summary">
                     <h2>Estadísticas:</h2>
                     <p>Total de HUs procesadas: {total_parent_tasks}</p>
                     <p>Total de subtareas procesadas: {total_tasks}</p>
@@ -879,7 +879,7 @@ def generar_resumen_html(total_parent_tasks, total_tasks, created_issues, modifi
                     <p>Total de Issues Fallidas: {len(failed_tasks)}</p>
                 </div>
             </div>
-            <!-- Condicionales para verificar si hay tareas antes de mostrar cada sección -->
+            <!-- Cajas de tareas debajo -->
             {''.join(f"""
             <div class="summary">
                 <h2>Tareas {tipo}:</h2>
