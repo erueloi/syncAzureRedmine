@@ -13,22 +13,24 @@
         <p>Listado de ejecuciones del script de sincronización.</p>
     </header>
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>Fecha/Hora</th>
-                    <th>Tareas Creadas</th>
-                    <th>Tareas Modificadas</th>
-                    <th>Tareas Fallidas</th>
-                    <th>Tareas No Modificadas</th>
-                    <th>Resultado</th>
-                    <th>Detalle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Las filas se generarán dinámicamente -->
-            </tbody>
-        </table>
+        <div class="table-scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha/Hora</th>
+                        <th>Tareas Creadas</th>
+                        <th>Tareas Modificadas</th>
+                        <th>Tareas Fallidas</th>
+                        <th>Tareas No Modificadas</th>
+                        <th>Resultado</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se generarán dinámicamente -->
+                </tbody>
+            </table>
+        </div>        
     </main>
     <footer>
         <p>Última actualización: <span id="last-update">cargando...</span> <button id="refresh-button"><i class="fas fa-sync-alt"></i></button></p>

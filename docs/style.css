@@ -85,6 +85,28 @@ footer a {
     padding-left: 20px;
 }
 
+/* Estilo modificado para la tabla */
+.table-scrollable {
+    display: block;
+    max-height: 500px; /* Altura máxima deseada para la tabla */
+    overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede la altura máxima */
+    width: 100%;
+}
+
+/* Asegura que el encabezado de la tabla se mantenga visible */
+.table-scrollable thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Asegura que el encabezado se muestre sobre el contenido al desplazar */
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+/* Ajuste para garantizar la visibilidad del contenido de las celdas bajo el encabezado fijo */
+.table-scrollable tbody tr:first-child td {
+    padding-top: 20px;
+}
+
 
 
 @media (max-width: 768px) {
