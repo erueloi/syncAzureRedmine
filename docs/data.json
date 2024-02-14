@@ -1,5 +1,14 @@
 [
     {
+        "fechaHora": "2024-02-14 12:18",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 68,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240214_122201.html"
+    },
+    {
         "fechaHora": "2024-02-14 12:03",
         "tareasCreadas": 0,
         "tareasModificadas": 0,
