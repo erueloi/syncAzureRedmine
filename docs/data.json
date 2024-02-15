@@ -1,5 +1,14 @@
 [
     {
+        "fechaHora": "2024-02-15 11:20",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 40,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_112527.html"
+    },
+    {
         "fechaHora": "2024-02-15 11:02",
         "tareasCreadas": 0,
         "tareasModificadas": 0,
@@ -439,23 +448,5 @@
         "tareasNoModificadas": 43,
         "estado": "Con Éxito",
         "detalle": "resultados/resumen_ejecucion_20240213_182548.html"
-    },
-    {
-        "fechaHora": "2024-02-13 18:07",
-        "tareasCreadas": 0,
-        "tareasModificadas": 0,
-        "tareasFallidas": 0,
-        "tareasNoModificadas": 43,
-        "estado": "Con Éxito",
-        "detalle": "resultados/resumen_ejecucion_20240213_181129.html"
-    },
-    {
-        "fechaHora": "2024-02-13 17:46",
-        "tareasCreadas": 0,
-        "tareasModificadas": 0,
-        "tareasFallidas": 0,
-        "tareasNoModificadas": 43,
-        "estado": "Completado",
-        "detalle": "resultados/resumen_ejecucion_20240213_165057.html"
     }
 ]
