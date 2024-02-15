@@ -786,7 +786,9 @@ def actualizar_data_json(nueva_ejecucion):
     # Añadir la nueva ejecución a la lista
     data.insert(0, nueva_ejecucion)
 
-    data = data[-50:]  # Limitar la lista a las últimas 50 ejecuciones
+    # Si la lista excede las 50 ejecuciones, se elimina la más antigua (la última de la lista)
+    if len(data) > 50:
+        data = data[:50]  # Conservar solo las primeras 50 ejecuciones
 
     # Guardar los cambios en data.json
     with open(data_json_path, 'w', encoding='utf-8') as file:
