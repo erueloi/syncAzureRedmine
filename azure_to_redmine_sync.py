@@ -613,11 +613,9 @@ def necesita_actualizacion(task_azure, redmine_task):
     if task_azure['parentid'] is None:
         #Campos a actualizar cuando es una HU padre
         campos_a_actualizar = ['estado', 'azure_id', 'version_sprint_id']
-    else:
-        
-        campos_a_actualizar = ['estado', 'azure_id', 'version_sprint_id','horas_restantes', 'porcentaje_realizado', 'assigned_to_id']
-
-    # Actualizaciones comunes
+    else:        
+        campos_a_actualizar = ['estado', 'azure_id', 'version_sprint_id','horas_restantes', 'porcentaje_realizado', 'assigned_to_id', 'estimated_hours']
+    
     if 'estado' in campos_a_actualizar:
         estado_redmine = mapeo_estados.get(task_azure['state'])
         if estado_redmine and redmine_task.status.id != estado_redmine:
@@ -632,7 +630,6 @@ def necesita_actualizacion(task_azure, redmine_task):
         if fixed_version_actual != version_sprint.id:
             cambios['version_sprint_id'] = version_sprint.id
 
-    # Actualizaciones condicionales
     if 'horas_restantes' in campos_a_actualizar and task_azure['remaininghours'] is not None:
         horas_restantes_redmine = str(int(math.ceil(task_azure['remaininghours'])))
         campo_horas_restantes = redmine_task.custom_fields.get(int(ID_CAMPO_HORAS_RESTANTES))
@@ -649,6 +646,11 @@ def necesita_actualizacion(task_azure, redmine_task):
         assigned_to_id_redmine = getattr(redmine_task.assigned_to, 'id', None) if hasattr(redmine_task, 'assigned_to') else None
         if task_azure['assigned_to_id'] and assigned_to_id_redmine != task_azure['assigned_to_id']:
             cambios['assigned_to_id'] = task_azure['assigned_to_id']
+    
+    if 'estimated_hours' in campos_a_actualizar:
+        estimated_hours_redmine = getattr(redmine_task, 'estimated_hours', 0)
+        if task_azure['estimatedhours'] and estimated_hours_redmine != task_azure['estimatedhours']:
+            cambios['estimated_hours'] = task_azure['estimatedhours']
 
     return cambios
 
@@ -684,6 +686,10 @@ def actualizar_tarea_redmine(redmine_task, cambios):
             tarea.fixed_version_id = version_sprint.id
             tarea.custom_fields = [{'id': 34, 'value': version_sprint.name}]
             actualizacion_realizada = True
+
+        if 'estimated_hours' in cambios:
+            tarea.estimated_hours = cambios['estimated_hours']
+            actualizacion_realizada = True 
 
         if actualizacion_realizada:
             tarea.save()
