@@ -9,6 +9,249 @@
         "detalle": "resultados/resumen_ejecucion_20240216_102054.html"
     },
     {
+        "fechaHora": "2024-02-16 10:05",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 12,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_100839.html"
+    },
+    {
+        "fechaHora": "2024-02-16 09:48",
+        "tareasCreadas": 0,
+        "tareasModificadas": 1,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 9,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_095213.html"
+    },
+    {
+        "fechaHora": "2024-02-16 09:34",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 8,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_093845.html"
+    },
+    {
+        "fechaHora": "2024-02-16 09:22",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 8,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_092651.html"
+    },
+    {
+        "fechaHora": "2024-02-16 09:06",
+        "tareasCreadas": 1,
+        "tareasModificadas": 1,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 4,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_091001.html"
+    },
+    {
+        "fechaHora": "2024-02-16 08:49",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 4,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_085218.html"
+    },
+    {
+        "fechaHora": "2024-02-16 08:35",
+        "tareasCreadas": 0,
+        "tareasModificadas": 3,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 1,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_083921.html"
+    },
+    {
+        "fechaHora": "2024-02-16 08:19",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 1,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_082309.html"
+    },
+    {
+        "fechaHora": "2024-02-16 08:05",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 0,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240216_080753.html"
+    },
+    {
+        "fechaHora": "2024-02-15 17:46",
+        "tareasCreadas": 0,
+        "tareasModificadas": 2,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 52,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_175120.html"
+    },
+    {
+        "fechaHora": "2024-02-15 17:32",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 53,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_173624.html"
+    },
+    {
+        "fechaHora": "2024-02-15 17:21",
+        "tareasCreadas": 0,
+        "tareasModificadas": 2,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 51,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_172526.html"
+    },
+    {
+        "fechaHora": "2024-02-15 17:02",
+        "tareasCreadas": 0,
+        "tareasModificadas": 1,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 51,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_170623.html"
+    },
+    {
+        "fechaHora": "2024-02-15 16:46",
+        "tareasCreadas": 1,
+        "tareasModificadas": 1,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 50,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_165030.html"
+    },
+    {
+        "fechaHora": "2024-02-15 16:19",
+        "tareasCreadas": 0,
+        "tareasModificadas": 1,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 50,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_162427.html"
+    },
+    {
+        "fechaHora": "2024-02-15 16:02",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 51,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_160510.html"
+    },
+    {
+        "fechaHora": "2024-02-15 15:46",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 51,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_155011.html"
+    },
+    {
+        "fechaHora": "2024-02-15 15:32",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 48,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_153620.html"
+    },
+    {
+        "fechaHora": "2024-02-15 15:19",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 48,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_152413.html"
+    },
+    {
+        "fechaHora": "2024-02-15 15:02",
+        "tareasCreadas": 0,
+        "tareasModificadas": 1,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 47,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_150539.html"
+    },
+    {
+        "fechaHora": "2024-02-15 14:46",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 47,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_145035.html"
+    },
+    {
+        "fechaHora": "2024-02-15 14:31",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 47,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_143525.html"
+    },
+    {
+        "fechaHora": "2024-02-15 14:19",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 47,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_142326.html"
+    },
+    {
+        "fechaHora": "2024-02-15 14:02",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 47,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_140534.html"
+    },
+    {
+        "fechaHora": "2024-02-15 13:49",
+        "tareasCreadas": 1,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 45,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_135249.html"
+    },
+    {
+        "fechaHora": "2024-02-15 13:37",
+        "tareasCreadas": 2,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 43,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_134134.html"
+    },
+    {
+        "fechaHora": "2024-02-15 13:22",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 43,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240215_132522.html"
+    },
+    {
         "fechaHora": "2024-02-15 13:08",
         "tareasCreadas": 0,
         "tareasModificadas": 1,
