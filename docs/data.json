@@ -9,6 +9,15 @@
         "detalle": "resultados/resumen_ejecucion_20240219_172721.html"
     },
     {
+        "fechaHora": "2024-02-19 17:21",
+        "tareasCreadas": 0,
+        "tareasModificadas": 0,
+        "tareasFallidas": 0,
+        "tareasNoModificadas": 248,
+        "estado": "Con Éxito",
+        "detalle": "resultados/resumen_ejecucion_20240219_172628.html"
+    },
+    {
         "fechaHora": "2024-02-19 17:10",
         "tareasCreadas": 1,
         "tareasModificadas": 4,
